@@ -32,7 +32,7 @@ RUN make install
 
 WORKDIR /build
 RUN rm -rf mosh
-RUN git clone git://github.com/higepon/mosh.git --depth 1 --tags
+RUN git clone git://github.com/higepon/mosh.git --depth 1
 WORKDIR /build/mosh
 RUN gen-git-build.sh
 RUN ./configure
