@@ -3,12 +3,6 @@
 # TODO: This uses Jessie because newer gcc versions miscompile Mosh
 
 FROM debian:jessie-slim AS build
-
-ADD http://storage.osdev.info/pub/mosh/mosh-current.tar.gz /tmp/mosh-current.tar.gz
-WORKDIR /tmp
-#COPY mosh-current.tar.gz .
-COPY onig-config /usr/local/bin/
-
 RUN apt-get update && apt-get -y --no-install-recommends install \
       autoconf \
       automake \
@@ -25,6 +19,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       pkg-config \
       re2c \
  && rm -rf /var/lib/apt/lists/*
+
+ADD http://storage.osdev.info/pub/mosh/mosh-current.tar.gz /tmp/mosh-current.tar.gz
+WORKDIR /tmp
+#COPY mosh-current.tar.gz .
+COPY onig-config /usr/local/bin/
 
 RUN set -uxe; \
     tar xvaf mosh-current.tar.gz; \
