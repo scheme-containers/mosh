@@ -1,3 +1,2 @@
 #!/bin/sh
-
-pkg-config "$@" oniguruma
+exec pkg-config "$@" oniguruma
