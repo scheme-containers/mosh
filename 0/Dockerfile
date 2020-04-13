@@ -19,26 +19,25 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       pkg-config \
       re2c \
  && rm -rf /var/lib/apt/lists/*
-
-ADD http://storage.osdev.info/pub/mosh/mosh-current.tar.gz /tmp/mosh-current.tar.gz
-WORKDIR /tmp
-#COPY mosh-current.tar.gz .
 COPY onig-config /usr/local/bin/
+WORKDIR /build
+COPY checksum checksum
+ADD http://storage.osdev.info/pub/mosh/mosh-current.tar.gz mosh.tar.gz
+RUN sha256sum mosh.tar.gz && sha256sum -c checksum
+RUN mkdir mosh && tar -C mosh --strip-components 1 -xf mosh.tar.gz
+WORKDIR /build/mosh
+RUN ./configure --prefix=/usr/local
+RUN make -j4
+RUN make install
 
-RUN set -uxe; \
-    tar xvaf mosh-current.tar.gz; \
-    cd mosh-*; \
-    ./configure --prefix=/usr/local; \
-    make -j4; \
-    make install
-
-RUN git clone --depth 1 git://github.com/higepon/mosh.git
-WORKDIR mosh
-RUN set -uxe; \
-    ./gen-git-build.sh; \
-    ./configure; \
-    make -j4; \
-    make install
+WORKDIR /build
+RUN rm -rf mosh
+RUN git clone git://github.com/higepon/mosh.git --depth 1 --tags
+WORKDIR /build/mosh
+RUN gen-git-build.sh
+RUN ./configure
+RUN make -j4
+RUN make install
 
 FROM debian:jessie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
