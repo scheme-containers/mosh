@@ -46,8 +46,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgmp10 \
       libonig2 \
  && rm -rf /var/lib/apt/lists/*
-COPY --from=build /usr/local/share/ /usr/local/share/
-COPY --from=build /usr/local/bin/ /usr/local/bin/
+COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 RUN ln -s mosh /usr/local/bin/scheme-script
 CMD ["scheme-banner"]
