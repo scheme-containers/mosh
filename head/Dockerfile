@@ -19,7 +19,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       pkg-config \
       re2c \
  && rm -rf /var/lib/apt/lists/*
-COPY onig-config /usr/local/bin/
 WORKDIR /build
 RUN git clone git://github.com/higepon/mosh.git --depth 1
 WORKDIR /build/mosh
@@ -36,6 +35,4 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libonig2 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-banner /usr/local/bin/
-RUN ln -s mosh /usr/local/bin/scheme-script
 CMD ["scheme-banner"]
