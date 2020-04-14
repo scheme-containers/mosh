@@ -27,7 +27,7 @@ RUN sha256sum mosh.tar.gz && sha256sum -c checksum
 RUN mkdir mosh && tar -C mosh --strip-components 1 -xf mosh.tar.gz
 WORKDIR /build/mosh
 RUN ./configure --prefix=/usr/local
-RUN make -j4
+RUN make
 RUN make install
 
 WORKDIR /build
@@ -36,7 +36,7 @@ RUN git clone git://github.com/higepon/mosh.git --depth 1
 WORKDIR /build/mosh
 RUN ./gen-git-build.sh
 RUN ./configure
-RUN make -j4
+RUN make
 RUN make install
 
 FROM debian:jessie-slim
