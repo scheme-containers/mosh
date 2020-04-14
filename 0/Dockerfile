@@ -26,7 +26,7 @@ ADD http://storage.osdev.info/pub/mosh/mosh-current.tar.gz mosh.tar.gz
 RUN sha256sum mosh.tar.gz && sha256sum -c checksum
 RUN mkdir mosh && tar -C mosh --strip-components 1 -xf mosh.tar.gz
 WORKDIR /build/mosh
-RUN ./configure --prefix=/usr/local
+RUN ./configure
 RUN make
 RUN make install
 
