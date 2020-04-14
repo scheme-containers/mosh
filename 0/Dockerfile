@@ -30,15 +30,6 @@ RUN ./configure
 RUN make
 RUN make install
 
-WORKDIR /build
-RUN rm -rf mosh
-RUN git clone git://github.com/higepon/mosh.git --depth 1
-WORKDIR /build/mosh
-RUN ./gen-git-build.sh
-RUN ./configure
-RUN make
-RUN make install
-
 FROM debian:jessie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libssl1.0.0 \
